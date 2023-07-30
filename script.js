@@ -1,20 +1,23 @@
-let currentPokemon;
-let loadedPokemon = 15;
-let currentLoaded = 1; // Variable, um den Startpunkt der API-Abfrage festzulegen
-let pokeList = [];
+let currentPokemon; // Eine Variable, um das aktuell geladene Pokémon zu speichern.
+let loadedPokemon = 15; // Eine Variable, um die Anzahl der geladenen Pokémon festzulegen (Startwert: 15).
+let currentLoaded = 1; // Eine Variable, um den Startpunkt der API-Abfrage festzulegen (Startwert: 1).
+let pokeList = []; // Ein Array, um die geladenen Pokémon zu speichern.
+
 
 function init() {
   loadPokemon();
-  document.getElementById("searchQuery").addEventListener("input", filterpokemon);
+  document.getElementById("searchQuery").addEventListener("input", filterpokemon); //Fügt einen Event-Listener hinzu, um die Suchanfrage zu überwachen.
 }
 
-async function filterpokemon() {
+
+
+async function filterpokemon() { // sucht im inputfeld nach pokemon
   const query = document.getElementById("searchQuery").value.toLowerCase(); // Suchanfrage in Kleinbuchstaben konvertieren
   const filteredPokemon = pokeList.filter((pokemon) =>
     pokemon.name.toLowerCase().includes(query)
   );
   // Alle Pokémon-Karten verstecken
-  const allPokemonCards = document.querySelectorAll(".poke-wrap-card");
+  const allPokemonCards = document.querySelectorAll(".poke-wrap-card"); // speichert alle Elemente mit der Klasse "poke-wrap-card"
   allPokemonCards.forEach((card) => (card.style.display = "none"));
   // Nur die gefilterten Pokémon-Karten anzeigen
   filteredPokemon.forEach((pokemon) => {
@@ -24,9 +27,10 @@ async function filterpokemon() {
   });
 }
 
-function loadMorePokemon() {
-  // Überprüfen, ob das Eingabefeld einen Wert hat
-  const searchQuery = document.getElementById("searchQuery").value;
+
+
+function loadMorePokemon() { // läd weitere pokemon 
+  const searchQuery = document.getElementById("searchQuery").value; //speichert den Text im Eingabefeld.
   if (searchQuery === "") { // Nur wenn das Eingabefeld leer ist, können weitere Pokémon geladen werden
     if (loadedPokemon >= 151) {
     }
@@ -37,6 +41,8 @@ function loadMorePokemon() {
     loadPokemon();
   } 
 }
+
+
 
 async function loadPokemon() {
   for (let i = currentLoaded; i <= loadedPokemon; i++) {
@@ -52,8 +58,9 @@ async function loadPokemon() {
   currentLoaded = loadedPokemon + 1; // Aktualisieren Sie den Startpunkt für die nächste API-Abfrage
 }
 
-function renderPokeCard(i, currentPokemon) {
-  // rendert die kleinen pokemon karten auf der seite
+
+
+function renderPokeCard(i, currentPokemon) {  // rendert die kleinen pokemon karten auf der seite
   return `
     <div onclick="openPokePopUp(${i})" id="poke-wrap${i}" class="poke-wrap-card">
       <div class="name-and-nr-div">
@@ -73,6 +80,8 @@ function renderPokeCard(i, currentPokemon) {
   `;
 }
 
+
+
 function renderPokeInfos(i, currentPokemon) {
   // Funktion, um die Informationen des Pokémon in der Karte anzuzeigen
   document.getElementById(`pokemonNummer2${i}`).innerHTML ="#" + currentPokemon["id"];
@@ -85,6 +94,8 @@ function renderPokeInfos(i, currentPokemon) {
     document.getElementById(`type${i}`).innerHTML += `<span class="type1">${type2}</span>`;
   }
 }
+
+
 
 function changeBackgroundColor() {
   const typeColors = {
@@ -105,8 +116,9 @@ function changeBackgroundColor() {
   });
 }
 
-function changeBackgroundColorPokedex(pokemonId) {
-  // Ändert die Hintergrundfarbe der Pokémon-Karten basierend auf dem Pokémon-Typ im PopUp
+
+
+function changeBackgroundColorPokedex(pokemonId) {  // Ändert die Hintergrundfarbe der Pokémon-Karten basierend auf dem Pokémon-Typ im PopUp
   const pokemon = pokeList[pokemonId - 1];
   let type1 = pokemon["types"][0]["type"]["name"];
   const typeColors = {
@@ -120,18 +132,24 @@ function changeBackgroundColorPokedex(pokemonId) {
   document.getElementById("pokedex").style.backgroundColor = backgroundColor;
 }
 
+
+
 function updatePokeImgNameNumbert(pokemon) {
   document.getElementById("pokemonImg").src =
-    pokemon["sprites"]["other"]["official-artwork"]["front_default"];
+  pokemon["sprites"]["other"]["official-artwork"]["front_default"];
   document.getElementById("pokemonName").innerText = pokemon["name"];
   document.getElementById("pokemonNummer").innerText = "#" + pokemon["id"];
 }
+
+
 
 function updatePokeHeightWeightAbility(pokemon) {
   document.getElementById("pokemon-Height").innerText =(pokemon["height"] / 10).toFixed(1) + " m ";
   document.getElementById("pokemon-weight").innerText =(pokemon["weight"] / 10).toFixed(1) + " kg ";
   document.getElementById("pokemon-abilities").innerText = pokemon["abilities"].map((ability) => ability["ability"]["name"]).join(", ");
 }
+
+
 
 function openPokePopUp(pokemonId) {  // Funktion, um das Popup des ausgewählten Pokémon zu öffnen
  
@@ -140,14 +158,7 @@ function openPokePopUp(pokemonId) {  // Funktion, um das Popup des ausgewählten
   let type1 = pokemon["types"][0]["type"]["name"];
   const type2 = pokemon["types"][1]? pokemon["types"][1]["type"]["name"]: null;
   document.getElementById("type").innerHTML = `<span class="type1">${type1}</span>`;
-  if (type2) {
-    // Den zweiten Typ des Pokémon im Popup anzeigen, falls vorhanden
-    document.getElementById("type").innerHTML += `<span class="type1">${type2}</span>`;
-}
-  document.getElementById("info-type").innerHTML = `<span class="type1">${type1}</span>`; ////////// im table die types der pokecardpopUp ///////////
-  if (type2) {
-    document.getElementById("info-type").innerHTML += `<span class="type1">${type2}</span>`;
-  }
+  displayPokemonTypes(type1, type2);
   updatePokeHeightWeightAbility(pokemon);
   changeBackgroundColorPokedex(pokemonId);
   updateStatsTable(pokemon["stats"]);
@@ -155,15 +166,42 @@ function openPokePopUp(pokemonId) {  // Funktion, um das Popup des ausgewählten
   document.getElementById("popUpDialog").classList.remove("d-none");
 }
 
+
+
+function displayPokemonTypes(type1, type2) {
+  if (type2) {
+    // Den zweiten Typ des Pokémon im Popup anzeigen, falls vorhanden
+    document.getElementById("type").innerHTML = `<span class="type1">${type1}</span><span class="type1">${type2}</span>`;
+  } else {
+    document.getElementById("type").innerHTML = `<span class="type1">${type1}</span>`;
+  }
+
+  // Die Typen des Pokémon im Table der pokecardpopUp anzeigen
+  if (type2) {
+    document.getElementById("info-type").innerHTML = `<span class="type1">${type1}</span><span class="type1">${type2}</span>`;
+  } else {
+    document.getElementById("info-type").innerHTML = `<span class="type1">${type1}</span>`;
+  }
+}
+
+
+
+
+
+
+
+
+
+
 function closePokePopUp() { // Funktion, um das Popup zu schließen
-  
   document.getElementById("popUpDialog").classList.add("d-none");
   hideSections();
   about();
 }
 
+
+
 function updateStatsTable(stats) {  // Funktion, um die Stats des Pokémon in die Tabelle einzufügen
- 
   const statsTable = document.getElementById("stats-table");
   statsTable.innerHTML = ""; // Vorherige Einträge löschen, um Überschneidungen zu vermeiden
   for (const stat of stats) {
@@ -182,10 +220,13 @@ function updateStatsTable(stats) {  // Funktion, um die Stats des Pokémon in di
   }
 }
 
-function capitalizeFirstLetter(str) {
-  // Funktion, um den ersten Buchstaben eines Strings groß zu machen
+
+
+function capitalizeFirstLetter(str) {  // Funktion, um den ersten Buchstaben eines Strings groß zu machen
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+
 
 function showMoves(pokemonId) { // Zeigt alle moves von den pokemon an
   const pokemon = pokeList[pokemonId - 1]; // Das ausgewählte Pokémon aus der pokeList holen, indem die ID angepasst wird
@@ -202,14 +243,12 @@ function showMoves(pokemonId) { // Zeigt alle moves von den pokemon an
 }
 
 
-/////////////////////////////////// info onclick function
 
-
+/////////////////////////////////// Nav-Bar info onclick function //////////////////////////////////////////
 
 function hideSections() {// Diese Funktion versteckt die Abschnitte mit den IDs 'section-11', 'section-22',und 'section-44'
-
   const sections = ["section-11", "section-22", "section-44"];
- 
+
   for (const sectionId of sections) {  // Schleife, um durch die Liste der Abschnitts-IDs zu iterieren
     const section = document.getElementById(sectionId); // Das entsprechende Abschnittselement anhand der ID abrufen
     if (section) { // Wenn das Abschnittselement existiert, setze seine Anzeige auf 'none' (verstecken)
@@ -219,38 +258,33 @@ function hideSections() {// Diese Funktion versteckt die Abschnitte mit den IDs 
 }
 
 
-function showSection(sectionId) { // Funktion zum Einblenden eines bestimmten Abschnitts und Verstecken der anderen
-  // Alle Abschnitte zuerst verstecken
-  hideSections();
 
-  // Das Abschnittselement abrufen, das angezeigt werden soll
-  const section = document.getElementById(sectionId);
-  // Wenn das Abschnittselement existiert, setze seine Anzeige auf 'block' (einblenden)
-  if (section) {
+function showSection(sectionId) { // Funktion zum Einblenden eines bestimmten Abschnitts und Verstecken der anderen
+  hideSections();
+  const section = document.getElementById(sectionId);  // Das Abschnittselement abrufen, das angezeigt werden soll
+  
+  if (section) { // Wenn das Abschnittselement existiert, setze seine Anzeige auf 'block' (einblenden)
     section.style.display = "block";
   }
 }
 
-// Funktion zum Einblenden des Abschnitts 'section-11'
-function about() {
-  // Den Abschnitt 'section-11' einblenden
+
+
+function about() { // Funktion zum Einblenden des Abschnitts 'section-11'
   showSection("section-11");
 }
 
-// Funktion zum Einblenden des Abschnitts 'section-22'
-function basteStas() {
-  // Den Abschnitt 'section-22' einblenden
+function basteStas() { // Funktion zum Einblenden des Abschnitts 'section-22'
   showSection("section-22");
 }
 
-// Funktion zum Einblenden des Abschnitts 'section-44'
-function moves() {
-  // Den Abschnitt 'section-44' einblenden
+function moves() { // Funktion zum Einblenden des Abschnitts 'section-44'
   showSection("section-44");
 }
 
 
-function changeImg() { ///// herz icon in rot ändern///////////////////
+
+function changeImg() { // Funktion herz icon in rot ändern
   let image = document.getElementById("picture");
   if (image.src.match("./img/herz.png")) {
     image.src = "./img/red-heart.png";
