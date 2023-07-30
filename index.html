@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="fonts.css">
+    <script src="script.js"></script>
+    <link rel="icon" type="image/x-icon" href="/img/pokeball.png">
+  </head>
+  <body onload="init()">
+    <header>
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand"><h1>Pokedex</h1></a>
+          <form class="d-flex" role="search">
+            <input id="searchQuery" class="form-control me-2"type="search"placeholder="Search"aria-label="Search"/>
+            <button onclick="filterpokemon()"  class="btn btn-outline-success" type="submit">Refresh</button>
+          </form>
+        </div>
+      </nav>
+    </header>
+
+    <div id="popUpDialog" class="dialog-bg d-none">
+      <!-- die pokekarte hat display none; -->
+
+      <div class="poke-Karte">
+        <div id="pokedex">
+          <div class="pokedex-icons">
+            <svg onclick="closePokePopUp()" xmlns="http://www.w3.org/2000/svg" cursor="pointer" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+
+            <img id="picture" onclick="changeImg()" src="./img/herz.png" />
+          </div>
+
+          <div class="poke-number-Div">
+            <h1 id="pokemonName"></h1>
+            <div class="pokemon-Nummer">
+              <b id="pokemonNummer"></b>
+            </div>
+          </div>
+          <div class="type-Div"><span id="type"></span></div>
+          <div class="pokemon-Img-Container">
+            <img id="pokemonImg" />
+          </div>
+        </div>
+        <div id="info-container">
+          <div class="main-info-div-mit-links">
+            <nav class="stroke" id="mainNav">
+              <ul>
+                <li><a id="section-1" onclick="about()" href="javascript:void(0)">Abaut</a></li>
+                <li><a id="section-2" onclick="basteStas()" href="javascript:void(0)">Base stats</a></li>
+                <li><a id="section-4" onclick="moves()" href="javascript:void(0)">Moves</a></li>
+              </ul>
+            </nav>
+            <div class="box-shadow"></div>
+            <div class="info-div">
+              <!--- Das ist die main div von den links-->
+              <div id="section-11" style="height: 306px">
+                <table>
+                  <tr>
+                    <td><b>Typ:</b></td>
+                    <td id="info-type"></td>
+                  </tr>
+                  <tr>
+                    <td><b>Height:</b></td>
+                    <td id="pokemon-Height"></td>
+                  
+                  </tr>
+                  <tr>
+                    <td><b>Weight:</b></td>
+                    <td id="pokemon-weight"></td>
+                  
+                  </tr>
+                  <tr>
+                    <td><b>Abilities:</b></td>
+                    <td id="pokemon-abilities"></td>
+                  </tr>
+                </table>
+              </div>
+
+              <div id="section-22" style="height: 306px">
+                <table id="stats-table"></table>
+              </div>
+
+
+              <div id="section-44" style="height: 306px">
+                <div id="moves" class="moves"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pokemon-deck"></div>
+
+
+<div class="stickyDiv">
+  <button onclick="loadMorePokemon()" class="button-82-pushable" role="button">
+    <span class="button-82-shadow"></span>
+    <span class="button-82-edge"></span>
+    <span class="button-82-front text">Load More </span>
+  </button>
+</div>
+
+  </body>
+</html>
+

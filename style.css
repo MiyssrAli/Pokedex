@@ -1,0 +1,504 @@
+body {
+    font-family: 'Roboto Slab';
+    margin: 0;
+    background-color: #bfc5c9db;
+}
+
+header {
+    position: sticky;
+    top: 22px;
+}
+
+.display-da {
+    display: block;
+}
+
+.d-none {
+    display: none;
+}
+
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+    margin-left: 22px;
+    margin-right: 22px;
+    border-radius: 22px;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+/* das ist der Pop Up style */
+
+.dialog-bg {
+
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.poke-Karte {
+    width: 384px;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
+    display: block;
+}
+
+#pokedex {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #FB6C6C;
+    color: white;
+    padding: 24px;
+}
+
+.pokedex-icons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.pokedex-icons img {
+    height: 24px;
+    cursor: pointer;
+}
+
+.type-Div {
+    text-align: center;
+    border-radius: 14px;
+    width: max-content;
+    padding-left: 22px;
+    padding-right: 22px;
+
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.pokemon-Nummer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 22px;
+}
+
+.pokemon-Img-Container {
+    display: flex;
+    justify-content: center;
+}
+
+.pokemon-Img-Container img {
+    height: 242px;
+    width: auto;
+}
+
+#info-container {
+    background-color: white;
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    margin-top: -74px;
+    overflow: hidden;
+}
+
+.info-div {
+
+    padding: 24px;
+}
+
+.box-shadow {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    height: 2px;
+
+}
+
+.progress-bar-div {
+    padding: 10px;
+    gap: 32px;
+    display: grid;
+}
+
+.progress {
+    background-color: #fffefe;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.progress-bar span {
+    font-weight: bolder;
+    color: white;
+    font-size: 16px;
+}
+
+#section-22 table td {
+    width: 50%;
+}
+
+#section-22 {
+    display: none;
+}
+
+#section-44 {
+    display: none;
+}
+
+.main-info-div-mit-links {
+
+    display: flex;
+    justify-content: center;
+
+    flex-direction: column;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.poke-number-Div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+}
+
+table td {
+    padding: 12px;
+}
+
+table td b {
+    color: #aaa;
+}
+
+/* das ist die css für die navbar  */
+
+.center {
+    text-align: center;
+}
+
+section {
+    height: 100vh;
+}
+
+/* NAVIGATION */
+nav {
+    margin-right: 42px;
+    margin-top: 42px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+nav ul li {
+    font-weight: 600;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #aaa;
+    margin: 0 10px;
+}
+
+nav ul li a,
+nav ul li a:after,
+nav ul li a:before {
+    transition: all .2s;
+}
+
+nav ul li a:hover {
+    color: #000000;
+}
+
+
+/* stroke */
+nav.stroke ul li a,
+nav.fill ul li a {
+    position: relative;
+}
+
+nav.stroke ul li a:after,
+nav.fill ul li a:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 0%;
+    content: '.';
+    color: transparent;
+    background: #aaa;
+    height: 1px;
+}
+
+nav.stroke ul li a:hover:after {
+    width: 100%;
+}
+
+nav.fill ul li a {
+    transition: all 2s;
+}
+
+nav.fill ul li a:after {
+    text-align: left;
+    content: '.';
+    margin: 0;
+    opacity: 0;
+}
+
+nav.fill ul li a:hover {
+    color: #fff;
+    z-index: 1;
+}
+
+nav.fill ul li a:hover:after {
+    z-index: -10;
+    animation: fill 1s forwards;
+    -webkit-animation: fill 1s forwards;
+    -moz-animation: fill 1s forwards;
+    opacity: 1;
+}
+
+
+/* hier kommen alle pokekarten wrap ansicht !!!!!!!!!!!!!!!!!!!! */
+#pokemon-deck {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 54px;
+}
+
+.poke-wrap-card {
+    box-shadow: 7px 5px 12px rgba(0, 0, 0, 0.7);
+    padding: 12px;
+    width: 300px;
+    border-radius: 28px;
+    margin: 10px;
+    cursor: pointer;
+    margin: 16px;
+}
+
+.poke-wrap-card:hover {
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+
+
+.name-and-nr-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+#pokemonName1 {
+    font-size: 22px;
+    color: white;
+    margin-right: 84px;
+    margin-bottom: -54px;
+    padding-right: 17px;
+}
+
+
+.display-flex {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+.poke-wrap-img-div img {
+    height: 122px;
+    width: auto;
+}
+
+.info-type1 {
+    margin: auto;
+}
+
+.type1 {
+    background-color: #69676742;
+    text-align: center;
+    border-radius: 14px;
+    width: max-content;
+    padding-left: 16px;
+    padding-right: 16px;
+    color: white;
+    padding-bottom: -3px;
+    border: 1px solid;
+    padding-bottom: 4px;
+    gap: 22px;
+}
+
+.moves {
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.moves span {
+    background-color: #e1e1e1e6;
+    text-align: center;
+    border-radius: 14px;
+    width: max-content;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-bottom: -3px;
+}
+
+.stickyDiv {
+    position: sticky;
+    bottom: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CSS */
+.button-82-pushable {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-82-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.button-82-edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.button-82-front {
+    display: block;
+    position: relative;
+    padding: 12px 27px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+@media (min-width: 768px) {
+    .button-82-front {
+        font-size: 1.25rem;
+        padding: 12px 42px;
+    }
+}
+
+.button-82-pushable:hover {
+    filter: brightness(110%);
+    -webkit-filter: brightness(110%);
+}
+
+.button-82-pushable:hover .button-82-front {
+    transform: translateY(-6px);
+    transition:
+        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-front {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.button-82-pushable:hover .button-82-shadow {
+    transform: translateY(4px);
+    transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-82-pushable:active .button-82-shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.button-82-pushable:focus:not(:focus-visible) {
+    outline: none;
+}
+
+
+
+@media (max-width: 420px){
+
+    .pokemon-Img-Container img {
+        height: 160px;
+        width: auto;
+    }
+    .poke-Karte {
+        width: 328px;
+        margin: 6px;
+    }
+    table {
+
+        font-size: 12px;
+    }
+    nav ul li {
+        font-size: 12px;
+    }
+    .moves span {
+        background-color: #e1e1e1e6;
+        text-align: center;
+        border-radius: 14px;
+        width: max-content;
+        padding-left: 12px;
+        padding-right: 12px;
+        font-size: 12px;
+    }
+    .type-Div {
+        font-size: 12px;
+    }
+
+}
