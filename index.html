@@ -28,7 +28,7 @@
 
     <div id="popUpDialog" class="dialog-bg d-none">
       <!-- die pokekarte hat display none; -->
-
+  
       <div class="poke-Karte">
         <div id="pokedex">
           <div class="pokedex-icons">
@@ -36,7 +36,7 @@
               <path fill-rule="evenodd"d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
             </svg>
 
-            <img id="picture" onclick="changeImg()" src="./img/herz.png" />
+            
           </div>
 
           <div class="poke-number-Div">
@@ -47,7 +47,14 @@
           </div>
           <div class="type-Div"><span id="type"></span></div>
           <div class="pokemon-Img-Container">
+           <div id="previous-div">
+            <button onclick="previousPokemon()" class="button-83" role="button"> < </button>
+          </div>
+          
             <img id="pokemonImg" />
+        
+            <button onclick="nextPokemon()" class="button-83" role="button"> > </button>
+     
           </div>
         </div>
         <div id="info-container">
@@ -97,10 +104,14 @@
           </div>
         </div>
       </div>
+    
     </div>
-
+   
     <div id="pokemon-deck"></div>
 
+
+
+   
 
 <div class="stickyDiv">
   <button onclick="loadMorePokemon()" class="button-82-pushable" role="button">
@@ -108,6 +119,7 @@
     <span class="button-82-edge"></span>
     <span class="button-82-front text">Load More </span>
   </button>
+  <button class="button-27" role="button"><a href="#">UP</a></button>
 </div>
 
   </body>

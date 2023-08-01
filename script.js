@@ -1,5 +1,5 @@
 let currentPokemon; // Eine Variable, um das aktuell geladene Pokémon zu speichern.
-let loadedPokemon = 15; // Eine Variable, um die Anzahl der geladenen Pokémon festzulegen (Startwert: 15).
+let loadedPokemon = 30; // Eine Variable, um die Anzahl der geladenen Pokémon festzulegen (Startwert: 15).
 let currentLoaded = 1; // Eine Variable, um den Startpunkt der API-Abfrage festzulegen (Startwert: 1).
 let pokeList = []; // Ein Array, um die geladenen Pokémon zu speichern.
 
@@ -7,6 +7,7 @@ let pokeList = []; // Ein Array, um die geladenen Pokémon zu speichern.
 function init() {
   loadPokemon();
   document.getElementById("searchQuery").addEventListener("input", filterpokemon); //Fügt einen Event-Listener hinzu, um die Suchanfrage zu überwachen.
+
 }
 
 
@@ -39,6 +40,8 @@ function loadMorePokemon() { // läd weitere pokemon
       loadedPokemon = 151;
     }
     loadPokemon();
+    document.getElementById("searchQuery").addEventListener("input", filterpokemon);
+    currentPokemon = pokeList[0]; // Setze das erste Pokemon als aktuell ausgewähltes Pokemon.
   } 
 }
 
@@ -135,8 +138,7 @@ function changeBackgroundColorPokedex(pokemonId) {  // Ändert die Hintergrundfa
 
 
 function updatePokeImgNameNumbert(pokemon) {
-  document.getElementById("pokemonImg").src =
-  pokemon["sprites"]["other"]["official-artwork"]["front_default"];
+  document.getElementById("pokemonImg").src = pokemon["sprites"]["other"]["official-artwork"]["front_default"];
   document.getElementById("pokemonName").innerText = pokemon["name"];
   document.getElementById("pokemonNummer").innerText = "#" + pokemon["id"];
 }
@@ -163,34 +165,51 @@ function openPokePopUp(pokemonId) {  // Funktion, um das Popup des ausgewählten
   changeBackgroundColorPokedex(pokemonId);
   updateStatsTable(pokemon["stats"]);
   showMoves(pokemonId);
+  currentPokemon = pokeList[pokemonId - 1];
+  if (currentPokemon["id"] === 1) {
+    document.getElementById('previous-div').classList.add("d-none");
+  } else {
+    document.getElementById('previous-div').classList.remove("d-none");
+  }
   document.getElementById("popUpDialog").classList.remove("d-none");
 }
 
+function nextPokemon() {
+  const currentPokemonId = currentPokemon["id"];
+  const currentIndex = pokeList.findIndex(pokemon => pokemon["id"] === currentPokemonId);
+  const nextIndex = (currentIndex + 1) % pokeList.length;
+  if (pokeList[nextIndex]["id"] > 1) {
+    document.getElementById('previous-div').classList.remove("d-none");
+  }
+  currentPokemon = pokeList[nextIndex]; 
+  openPokePopUp(currentPokemon["id"]);
+}
+
+function previousPokemon(){
+  const currentPokemonId = currentPokemon["id"];
+  const currentIndex = pokeList.findIndex(pokemon => pokemon["id"] === currentPokemonId);
+  const nextIndex = (currentIndex - 1) % pokeList.length;
+  if (pokeList[nextIndex]["id"] === 1) {
+    document.getElementById('previous-div').classList.add("d-none");
+  }
+  currentPokemon = pokeList[nextIndex]; 
+  openPokePopUp(currentPokemon["id"]);
+}
 
 
 function displayPokemonTypes(type1, type2) {
-  if (type2) {
-    // Den zweiten Typ des Pokémon im Popup anzeigen, falls vorhanden
+  if (type2) { // Den zweiten Typ des Pokémon im Popup anzeigen, falls vorhanden
     document.getElementById("type").innerHTML = `<span class="type1">${type1}</span><span class="type1">${type2}</span>`;
   } else {
     document.getElementById("type").innerHTML = `<span class="type1">${type1}</span>`;
   }
-
-  // Die Typen des Pokémon im Table der pokecardpopUp anzeigen
-  if (type2) {
+  
+  if (type2) { // Die Typen des Pokémon im Table der pokecardpopUp anzeigen
     document.getElementById("info-type").innerHTML = `<span class="type1">${type1}</span><span class="type1">${type2}</span>`;
   } else {
     document.getElementById("info-type").innerHTML = `<span class="type1">${type1}</span>`;
   }
 }
-
-
-
-
-
-
-
-
 
 
 function closePokePopUp() { // Funktion, um das Popup zu schließen
@@ -244,6 +263,8 @@ function showMoves(pokemonId) { // Zeigt alle moves von den pokemon an
 
 
 
+
+
 /////////////////////////////////// Nav-Bar info onclick function //////////////////////////////////////////
 
 function hideSections() {// Diese Funktion versteckt die Abschnitte mit den IDs 'section-11', 'section-22',und 'section-44'
@@ -281,15 +302,3 @@ function basteStas() { // Funktion zum Einblenden des Abschnitts 'section-22'
 function moves() { // Funktion zum Einblenden des Abschnitts 'section-44'
   showSection("section-44");
 }
-
-
-
-function changeImg() { // Funktion herz icon in rot ändern
-  let image = document.getElementById("picture");
-  if (image.src.match("./img/herz.png")) {
-    image.src = "./img/red-heart.png";
-  } else {
-    image.src = "./img/herz.png";
-  }
-}
-
